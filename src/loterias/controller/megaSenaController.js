@@ -35,51 +35,7 @@ async function megaSena() {
     const quinaDadosPremiacao = utilString.parseDadosPremiacao($, quina)
     const quadraDadosPremiacao = utilString.parseDadosPremiacao($, quadra)
 
-    const megaSenaJson = {
-        nomeJogo: nome,
-        concurso: utilString.getConcurso(concursoData),
-        acumulou: acumulou,
-        localSorteio: utilString.getLocalSorteio(localSorteio),
-        dataSorteio: utilString.getDataBR(concursoData),
-        dataSorteioMilissegundos: utilString.getDataMilissegundos(concursoData),
-        valorEstimadoProximoConcurso: utilString.parsePremio(
-            valorEstimadoProximoConcurso
-        ),
-        valorAcumuladoProximoConcurso: utilString.parsePremio(
-            valorAcumuladoProximoConcurso
-        ),
-        valorAcumuladoConcurso_0_5: utilString.parsePremio(
-            valorAcumuladoConcurso_0_5
-        ),
-        valorAcumuladoConcursoEspecial: utilString.parsePremio(
-            valorAcumuladoConcursoEspecial
-        ),
-        valorArrecadado: utilString.parsePremio(valorArrecadado),
-        dezenasSorteadas: dezenas,
-        premiacao: {
-            sena: {
-                nome: 'Sena',
-                numeroGanhadores:
-                    utilString.parseQuantidadeGanhadores(senaDadosPremiacao),
-                premio: utilString.parsePremio(senaDadosPremiacao),
-            },
-            quina: {
-                nome: 'Quina',
-                numeroGanhadores:
-                    utilString.parseQuantidadeGanhadores(quinaDadosPremiacao),
-                premio: utilString.parsePremio(quinaDadosPremiacao),
-            },
-            quadra: {
-                nome: 'Quadra',
-                numeroGanhadores:
-                    utilString.parseQuantidadeGanhadores(quadraDadosPremiacao),
-                premio: utilString.parsePremio(quadraDadosPremiacao),
-            },
-        },
-        localizacao: cidadesUfs,
-    }
 
-    //return megaSenaJson
     const result = resultModel.json
     result.nomeJogo = nome
     result.concurso = utilString.getConcurso(concursoData)
