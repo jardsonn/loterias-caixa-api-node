@@ -10,6 +10,7 @@ const json = {
     valorAcumuladoConcurso_0_5: Number,
     valorAcumuladoConcursoEspecial: Number,
     valorArrecadado: Number,
+    canalEletronico:Boolean,
     dezenasSorteadas: Array,
     premiacao: Object,
     localizacao: Array,

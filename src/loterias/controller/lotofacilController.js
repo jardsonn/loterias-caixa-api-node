@@ -3,8 +3,8 @@ const utilString = require('../../utils/handleStringData')
 const dataInCommon = require('../utils/scrapingAll')
 const resultModel = require('../models/resultModel')
 
-async function megaSena() {
-    const $ = await browser.startBrowser('megasena')
+async function lotofacil() {
+    const $ = await browser.startBrowser('lotofacil')
 
     const nome = dataInCommon.nome($)
     const concursoData = dataInCommon.concursoData($)
@@ -19,16 +19,20 @@ async function megaSena() {
     const valorAcumuladoConcursoEspecial =
         dataInCommon.valorAcumuladoConcursoEspecial($)
     const valorArrecadado = dataInCommon.valorArrecadado($)
-    const cidadesUfs = dataInCommon.cidadesUfs($)
+    const cidadesUfs = dataInCommon.cidadesUfsLF($)
 
-    const dezenas = dataInCommon.dezenasMS($)
+    const dezenas = dataInCommon.dezenasLF($)
     const premiacao = dataInCommon.premiacaoMS($)
-    const sena = premiacao.eq(0).children('span')
-    const quina = premiacao.eq(1).children('span')
-    const quadra = premiacao.eq(2).children('span')
-    const senaDadosPremiacao = utilString.parseDadosPremiacao($, sena)
-    const quinaDadosPremiacao = utilString.parseDadosPremiacao($, quina)
-    const quadraDadosPremiacao = utilString.parseDadosPremiacao($, quadra)
+    const acertos15 = premiacao.eq(0).children('span')
+    const acertos14 = premiacao.eq(1).children('span')
+    const acertos13 = premiacao.eq(2).children('span')
+    const acertos12 = premiacao.eq(3).children('span')
+    const acertos11 = premiacao.eq(4).children('span')
+    const dadosPremiacao15 = utilString.parseDadosPremiacao($, acertos15)
+    const dadosPremiacao14 = utilString.parseDadosPremiacao($, acertos14)
+    const dadosPremiacao13 = utilString.parseDadosPremiacao($, acertos13)
+    const dadosPremiacao12 = utilString.parseDadosPremiacao($, acertos12)
+    const dadosPremiacao11 = utilString.parseDadosPremiacao($, acertos11)
 
     const result = resultModel.json
     result.nomeJogo = nome
@@ -54,26 +58,38 @@ async function megaSena() {
     result.dezenasSorteadas = dezenas
     result.premiacao = [
         {
-            nome: 'Sena',
+            nome: '15 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(senaDadosPremiacao),
-            premio: utilString.parsePremio(senaDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao15),
+            premio: utilString.parsePremio(dadosPremiacao15),
         },
         {
-            nome: 'Quina',
+            nome: '14 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(quinaDadosPremiacao),
-            premio: utilString.parsePremio(quinaDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao14),
+            premio: utilString.parsePremio(dadosPremiacao14),
         },
         {
-            nome: 'Quadra',
+            nome: '13 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(quadraDadosPremiacao),
-            premio: utilString.parsePremio(quadraDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao13),
+            premio: utilString.parsePremio(dadosPremiacao13),
+        },
+        {
+            nome: '12 acertos',
+            numeroGanhadores:
+                utilString.parseQuantidadeGanhadores(dadosPremiacao12),
+            premio: utilString.parsePremio(dadosPremiacao12),
+        },
+        {
+            nome: '11 acertos',
+            numeroGanhadores:
+                utilString.parseQuantidadeGanhadores(dadosPremiacao11),
+            premio: utilString.parsePremio(dadosPremiacao11),
         },
     ]
     result.localizacao = cidadesUfs
     return result
 }
-
-module.exports = { megaSena }
+ 
+module.exports = { lotofacil }

@@ -3,8 +3,8 @@ const utilString = require('../../utils/handleStringData')
 const dataInCommon = require('../utils/scrapingAll')
 const resultModel = require('../models/resultModel')
 
-async function megaSena() {
-    const $ = await browser.startBrowser('megasena')
+async function quina() {
+    const $ = await browser.startBrowser('quina')
 
     const nome = dataInCommon.nome($)
     const concursoData = dataInCommon.concursoData($)
@@ -21,14 +21,16 @@ async function megaSena() {
     const valorArrecadado = dataInCommon.valorArrecadado($)
     const cidadesUfs = dataInCommon.cidadesUfs($)
 
-    const dezenas = dataInCommon.dezenasMS($)
+    const dezenas = dataInCommon.dezenasQN($)
     const premiacao = dataInCommon.premiacaoMS($)
-    const sena = premiacao.eq(0).children('span')
-    const quina = premiacao.eq(1).children('span')
-    const quadra = premiacao.eq(2).children('span')
-    const senaDadosPremiacao = utilString.parseDadosPremiacao($, sena)
-    const quinaDadosPremiacao = utilString.parseDadosPremiacao($, quina)
-    const quadraDadosPremiacao = utilString.parseDadosPremiacao($, quadra)
+    const acertos5 = premiacao.eq(0).children('span')
+    const acertos4 = premiacao.eq(1).children('span')
+    const acertos3 = premiacao.eq(2).children('span')
+    const acertos2 = premiacao.eq(3).children('span')
+    const dadosPremiacao5 = utilString.parseDadosPremiacao($, acertos5)
+    const dadosPremiacao4 = utilString.parseDadosPremiacao($, acertos4)
+    const dadosPremiacao3 = utilString.parseDadosPremiacao($, acertos3)
+    const dadosPremiacao2 = utilString.parseDadosPremiacao($, acertos2)
 
     const result = resultModel.json
     result.nomeJogo = nome
@@ -54,26 +56,32 @@ async function megaSena() {
     result.dezenasSorteadas = dezenas
     result.premiacao = [
         {
-            nome: 'Sena',
+            nome: '5 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(senaDadosPremiacao),
-            premio: utilString.parsePremio(senaDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao5),
+            premio: utilString.parsePremio(dadosPremiacao5),
         },
         {
-            nome: 'Quina',
+            nome: '4 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(quinaDadosPremiacao),
-            premio: utilString.parsePremio(quinaDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao4),
+            premio: utilString.parsePremio(dadosPremiacao4),
         },
         {
-            nome: 'Quadra',
+            nome: '3 acertos',
             numeroGanhadores:
-                utilString.parseQuantidadeGanhadores(quadraDadosPremiacao),
-            premio: utilString.parsePremio(quadraDadosPremiacao),
+                utilString.parseQuantidadeGanhadores(dadosPremiacao3),
+            premio: utilString.parsePremio(dadosPremiacao3),
+        },
+        {
+            nome: '2 acertos',
+            numeroGanhadores:
+                utilString.parseQuantidadeGanhadores(dadosPremiacao2),
+            premio: utilString.parsePremio(dadosPremiacao2),
         },
     ]
     result.localizacao = cidadesUfs
     return result
 }
 
-module.exports = { megaSena }
+module.exports = { quina }
